@@ -1,0 +1,6 @@
+@NarrativeEngine.Api_HostAddress = http://localhost:5148
+
+GET {{NarrativeEngine.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
