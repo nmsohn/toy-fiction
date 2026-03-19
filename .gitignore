@@ -1,0 +1,58 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.userprefs
+.idea/
+*.DotSettings.user
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# dotnet user-secrets
+secrets.json
+
+# ASP.NET
+wwwroot/dist/
+
+# Node / React
+src/NarrativeEngine.Web/node_modules/
+src/NarrativeEngine.Web/dist/
+src/NarrativeEngine.Web/.vite/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test results
+TestResults/
+coverage/
+*.trx
+*.coveragexml
+
+# AI
+.claude/
+.kiro/
+.omc/
+.agent/
+
+# Local
+.vscode/
+.local/
+.idea/
+.venv/
