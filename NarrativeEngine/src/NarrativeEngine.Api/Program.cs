@@ -1,8 +1,8 @@
 using AspNetCoreRateLimit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using NarrativeEngine.Api.Data;
-using NarrativeEngine.Api.Infrastructure;
+using NarrativeEngine.Api.Middleware;
+using NarrativeEngine.Infrastructure.Data;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +12,9 @@ builder.Host.UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(ctx.Configurati
 
 // EF Core + PostgreSQL
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("Default"))
+        .UseCamelCaseNamingConvention()
+    );
 
 // Controllers
 builder.Services.AddControllers();

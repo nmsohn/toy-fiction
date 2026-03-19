@@ -2,7 +2,7 @@ using System.Net;
 using Polly;
 using Polly.Extensions.Http;
 
-namespace NarrativeEngine.Api.Infrastructure;
+namespace NarrativeEngine.Infrastructure.Resilience;
 
 public static class ResiliencePolicy
 {

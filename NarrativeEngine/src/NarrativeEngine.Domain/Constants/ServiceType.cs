@@ -1,4 +1,4 @@
-namespace NarrativeEngine.Api.Infrastructure;
+namespace NarrativeEngine.Domain.Constants;
 
 public static class ServiceType
 {
