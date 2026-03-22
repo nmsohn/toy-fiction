@@ -14,7 +14,7 @@ public static class ApiInjections
         IConfiguration configuration)
     {
         services.AddHttpContextAccessor();
-        services.AddScoped<ICurrentUserAccessor, HttpContextCurrentUserAccessor>();
+        services.AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
         services.AddScoped<IUserLifecycleService, UserLifecycleService>();
 
         var apiRoutePrefix = configuration["Api:RoutePrefix"] ?? "api/v{version:apiVersion}";

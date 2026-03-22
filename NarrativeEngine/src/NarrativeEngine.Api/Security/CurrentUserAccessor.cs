@@ -3,7 +3,7 @@ using NarrativeEngine.Domain.Common;
 
 namespace NarrativeEngine.Api.Security;
 
-public class HttpContextCurrentUserAccessor(IHttpContextAccessor httpContextAccessor) : ICurrentUserAccessor
+public class CurrentUserAccessor(IHttpContextAccessor httpContextAccessor) : ICurrentUserAccessor
 {
     public long? UserId
     {
