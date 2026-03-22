@@ -8,7 +8,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.ToTable("User");
+        builder.ToTable("users");
         builder.HasKey(u => u.Id);
         builder.Property(u => u.Id)
             .UseIdentityAlwaysColumn();
@@ -16,8 +16,22 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Email)
             .IsRequired()
             .HasMaxLength(255);
+        
+        builder.Property(u => u.Role)
+            .IsRequired()
+            .HasConversion<string>()
+            .HasMaxLength(50);
 
-        builder.HasIndex(u => u.Email).IsUnique();
+        builder.HasIndex(u => u.Email)
+            .HasDatabaseName("ux_users_email_active")
+            .IsUnique()
+            .HasFilter("\"isDeleted\" = false");
+
+        builder.Property(u => u.Email)
+            .HasConversion(
+                v => v.ToLowerInvariant(),
+                v => v
+            );
 
         builder.Property(u => u.PasswordHash);
 
@@ -31,26 +45,27 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnType("timestamp with time zone")
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-        builder.Property(o => o.CreatedBy)
-            .HasColumnType("nvarchar(50)");
+        builder.Property(u => u.CreatedBy)
+            .HasMaxLength(100);
 
-        builder.Property(o => o.ModifiedBy)
-            .HasColumnType("nvarchar(50)");
-        
-        // Get user who's not deleted
+        builder.Property(u => u.ModifiedBy)
+            .HasMaxLength(100);
+
+        // Soft delete 
         builder.HasQueryFilter(u => !u.IsDeleted);
 
         // 관계 설정 (1:N - RefreshTokens)
         builder
             .HasMany(u => u.RefreshTokens)
-            .WithOne()
-            .HasForeignKey("UserId")
+            .WithOne(t => t.User)
+            .HasForeignKey(t => t.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
         // 관계 설정 (1:1 - UserSettings)
         builder
             .HasOne(u => u.Settings)
-            .WithOne()
-            .HasForeignKey<UserSettings>("UserId");
+            .WithOne(s => s.User)
+            .HasForeignKey<UserSettings>(s => s.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
