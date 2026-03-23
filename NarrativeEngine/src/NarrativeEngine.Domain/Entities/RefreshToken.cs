@@ -12,6 +12,5 @@ public class RefreshToken
     public DateTime CreatedAt { get; set; }
     public long UserId { get; set; }
 
-    // Navigation property
     public User User { get; set; } = null!;
 }
