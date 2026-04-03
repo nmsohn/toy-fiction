@@ -7,10 +7,12 @@ public class RefreshToken
     public DateTime ExpiresAt { get; set; }
     public bool IsRevoked { get; set; }
     public DateTime? RevokedAt { get; set; }
-    public string? ReplacedByTokenHash { get; set; }
+    public string? ReplacedByTokenHash { get; set; } // Deprecated: use ReplacedByTokenId
+    public long? ReplacedByTokenId { get; set; }
     public string? RevokeReason { get; set; }
     public DateTime CreatedAt { get; set; }
     public long UserId { get; set; }
 
     public User User { get; set; } = null!;
+    public RefreshToken? ReplacedBy { get; set; }
 }

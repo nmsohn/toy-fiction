@@ -12,11 +12,24 @@ public class AppDbContext(
     public DbSet<User> Users => Set<User>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<UserSettings> UserSettings => Set<UserSettings>();
+    public DbSet<Project> Projects => Set<Project>();
+    public DbSet<Chapter> Chapters => Set<Chapter>();
+    public DbSet<Character> Characters => Set<Character>();
+    public DbSet<CharacterTrait> CharacterTraits => Set<CharacterTrait>();
+    public DbSet<CharacterEmbedding> CharacterEmbeddings => Set<CharacterEmbedding>();
+    public DbSet<EmotionScore> EmotionScores => Set<EmotionScore>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasPostgresExtension("vector");
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
+        modelBuilder.ApplyConfiguration(new ProjectConfiguration());
+        modelBuilder.ApplyConfiguration(new ChapterConfiguration());
+        modelBuilder.ApplyConfiguration(new CharacterConfiguration());
+        modelBuilder.ApplyConfiguration(new CharacterTraitConfiguration());
+        modelBuilder.ApplyConfiguration(new CharacterEmbeddingConfiguration());
+        modelBuilder.ApplyConfiguration(new EmotionScoreConfiguration());
         base.OnModelCreating(modelBuilder);
     }
 

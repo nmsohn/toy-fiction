@@ -25,7 +25,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasIndex(u => u.Email)
             .HasDatabaseName("ux_users_email_active")
             .IsUnique()
-            .HasFilter("\"isDeleted\" = false");
+            .HasFilter("\"is_deleted\" = false");
 
         builder.Property(u => u.Email)
             .HasConversion(

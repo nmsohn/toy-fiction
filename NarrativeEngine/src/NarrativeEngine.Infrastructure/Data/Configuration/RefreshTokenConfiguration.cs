@@ -21,6 +21,11 @@ public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
         builder.HasIndex(t => t.TokenHash).IsUnique();
 
         builder.Property(t => t.ReplacedByTokenHash).HasMaxLength(64);
+        builder.Property(t => t.ReplacedByTokenId);
+        builder.HasOne(t => t.ReplacedBy)
+            .WithMany()
+            .HasForeignKey(t => t.ReplacedByTokenId)
+            .OnDelete(DeleteBehavior.SetNull);
         builder.Property(t => t.RevokeReason).HasMaxLength(50);
 
         builder.Property(t => t.ExpiresAt)

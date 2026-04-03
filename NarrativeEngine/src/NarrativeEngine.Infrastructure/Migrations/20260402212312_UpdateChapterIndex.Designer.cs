@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NarrativeEngine.Infrastructure.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -12,9 +13,11 @@ using Pgvector;
 namespace NarrativeEngine.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260402212312_UpdateChapterIndex")]
+    partial class UpdateChapterIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,7 +100,7 @@ namespace NarrativeEngine.Infrastructure.Migrations
 
                     b.HasIndex("ProjectId", "OrderIndex")
                         .HasDatabaseName("ix_chapters_projectId_orderIndex")
-                        .HasFilter("\"is_deleted\" = false");
+                        .HasFilter("\"isDeleted\" = false");
 
                     b.ToTable("chapters", (string)null);
                 });
@@ -158,7 +161,7 @@ namespace NarrativeEngine.Infrastructure.Migrations
 
                     b.HasIndex("ProjectId")
                         .HasDatabaseName("ix_characters_projectId")
-                        .HasFilter("\"is_deleted\" = false");
+                        .HasFilter("\"isDeleted\" = false");
 
                     b.ToTable("characters", (string)null);
                 });
@@ -437,10 +440,6 @@ namespace NarrativeEngine.Infrastructure.Migrations
                         .HasColumnType("character varying(64)")
                         .HasColumnName("replacedByTokenHash");
 
-                    b.Property<long?>("ReplacedByTokenId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("replacedByTokenId");
-
                     b.Property<string>("RevokeReason")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
@@ -462,9 +461,6 @@ namespace NarrativeEngine.Infrastructure.Migrations
 
                     b.HasKey("Id")
                         .HasName("pK_refresh_tokens");
-
-                    b.HasIndex("ReplacedByTokenId")
-                        .HasDatabaseName("iX_refresh_tokens_replacedByTokenId");
 
                     b.HasIndex("TokenHash")
                         .IsUnique()
@@ -677,20 +673,12 @@ namespace NarrativeEngine.Infrastructure.Migrations
 
             modelBuilder.Entity("NarrativeEngine.Domain.Entities.RefreshToken", b =>
                 {
-                    b.HasOne("NarrativeEngine.Domain.Entities.RefreshToken", "ReplacedBy")
-                        .WithMany()
-                        .HasForeignKey("ReplacedByTokenId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .HasConstraintName("fK_refresh_tokens_refresh_tokens_replacedByTokenId");
-
                     b.HasOne("NarrativeEngine.Domain.Entities.User", "User")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fK_refresh_tokens_users_userId");
-
-                    b.Navigation("ReplacedBy");
 
                     b.Navigation("User");
                 });

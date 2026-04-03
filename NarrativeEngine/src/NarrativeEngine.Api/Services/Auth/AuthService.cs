@@ -68,7 +68,7 @@ public class AuthService(
         //pg_advisory_lock
         var lockKey = BitConverter.ToInt64(SHA256.HashData(Encoding.UTF8.GetBytes(tokenHash)), 0);
         await context.Database.ExecuteSqlInterpolatedAsync(
-            $"SELECT pg_advisory_xact_lock({lockKey})", ct);
+            $"SELECT pg_advisory_xact_lock({lockKey})", ct); //safe from sql injection
 
         var existing = await context.RefreshTokens
             .Include(t => t.User)
