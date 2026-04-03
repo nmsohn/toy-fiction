@@ -1,7 +1,7 @@
 using System.Net;
 using System.Text.Json;
 
-namespace NarrativeEngine.Api.Infrastructure;
+namespace NarrativeEngine.Api.Middleware;
 
 public class GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> logger)
 {
@@ -24,10 +24,10 @@ public class GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExcep
     {
         var (statusCode, errorCode) = exception switch
         {
-            KeyNotFoundException    => (HttpStatusCode.NotFound,            "NOT_FOUND"),
-            UnauthorizedAccessException => (HttpStatusCode.Unauthorized,   "UNAUTHORIZED"),
-            InvalidOperationException   => (HttpStatusCode.BadRequest,     "INVALID_OPERATION"),
-            ArgumentException           => (HttpStatusCode.BadRequest,     "BAD_REQUEST"),
+            KeyNotFoundException        => (HttpStatusCode.NotFound,            "NOT_FOUND"),
+            UnauthorizedAccessException => (HttpStatusCode.Unauthorized,        "UNAUTHORIZED"),
+            InvalidOperationException   => (HttpStatusCode.BadRequest,          "INVALID_OPERATION"),
+            ArgumentException           => (HttpStatusCode.BadRequest,          "BAD_REQUEST"),
             _                           => (HttpStatusCode.InternalServerError, "INTERNAL_SERVER_ERROR")
         };
 

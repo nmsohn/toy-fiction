@@ -55,3 +55,4 @@ coverage/
 .vscode/
 .local/
 .idea/
+.venv/

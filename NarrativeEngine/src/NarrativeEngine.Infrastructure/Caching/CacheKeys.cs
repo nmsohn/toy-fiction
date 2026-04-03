@@ -1,4 +1,4 @@
-namespace NarrativeEngine.Api.Infrastructure;
+namespace NarrativeEngine.Infrastructure.Caching;
 
 public static class CacheKeys
 {

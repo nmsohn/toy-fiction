@@ -1,6 +1,7 @@
 using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 
-namespace NarrativeEngine.Api.Infrastructure;
+namespace NarrativeEngine.Infrastructure.Http;
 
 public class LoggingBehavior(ILogger<LoggingBehavior> logger) : DelegatingHandler
 {
